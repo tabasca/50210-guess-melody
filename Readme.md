@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Екатерина Иванюта](https://up.htmlacademy.ru/ecmascript/1/user/50210).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Быков](https://htmlacademy.ru/profile/id7107).
 
 ---
 
