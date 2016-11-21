@@ -95,7 +95,7 @@ gulp.task('clean', function () {
 gulp.task('serve', ['assemble', 'web-server']);
 
 gulp.task('assemble', ['clean'], function () {
-  gulp.start('copy', 'style', 'watch');
+  gulp.start('copy', 'style');
 });
 
 gulp.task('build', ['assemble', 'imagemin']);
@@ -108,10 +108,9 @@ gulp.task('web-server', function () {
     port: 3501,
     ui: false
   });
-});
 
-gulp.task('watch', function () {
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
   gulp.watch('src/*.html', ['copy-html']);
   gulp.watch('js/**/*.js', ['scripts']);
+
 });
