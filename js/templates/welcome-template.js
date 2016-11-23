@@ -1,7 +1,7 @@
 import getElementFromTemplate from '../add-template';
-import ScreensEngine from '../game';
+import screensEngine from '../game';
 
-const welcome =  {
+const welcome = {
   content: {
     title: 'Правила игры',
     text: 'Правила просты&nbsp;— за&nbsp;2 минуты дать максимальное количество правильных ответов.<br>На&nbsp;каждую мелодию всего 3 варианта ответа.<br>Удачи!'
@@ -24,7 +24,7 @@ let actionBtn = welcomeElem.querySelector('.main-play');
 
 actionBtn.addEventListener('click', function (evt) {
   evt.preventDefault();
-  ScreensEngine(welcome.events.goTo);
+  screensEngine(welcome.events.goTo);
 });
 
 export default welcomeElem;

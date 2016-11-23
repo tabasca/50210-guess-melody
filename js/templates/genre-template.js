@@ -1,7 +1,7 @@
 import getElementFromTemplate from '../add-template';
-import ScreensEngine from '../game';
+import screensEngine from '../game';
 
-const genre =  {
+const genre = {
   content: {
     title: 'Выберите инди-рок треки',
     value: {
@@ -24,19 +24,19 @@ const content = '<section class="main main--level main--level-genre">' +
   '<form class="genre">' +
   '<div class="genre-answer">' +
   '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a1 +'" id="a-1"><label class="genre-answer-check" for="a-1"></label>' +
+  '<input type="checkbox" name="answer" value="' + genre.content.value.a1 + '" id="a-1"><label class="genre-answer-check" for="a-1"></label>' +
   '</div>' +
   '<div class="genre-answer">' +
   '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a2 +'" id="a-2"><label class="genre-answer-check" for="a-2"></label>' +
+  '<input type="checkbox" name="answer" value="' + genre.content.value.a2 + '" id="a-2"><label class="genre-answer-check" for="a-2"></label>' +
   '</div>' +
   '<div class="genre-answer">' +
   '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a3 +'" id="a-3"><label class="genre-answer-check" for="a-3"></label>' +
+  '<input type="checkbox" name="answer" value="' + genre.content.value.a3 + '" id="a-3"><label class="genre-answer-check" for="a-3"></label>' +
   '</div>' +
   '<div class="genre-answer">' +
   '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a4 +'" id="a-4"><label class="genre-answer-check" for="a-4"></label>' +
+  '<input type="checkbox" name="answer" value="' + genre.content.value.a4 + '" id="a-4"><label class="genre-answer-check" for="a-4"></label>' +
   '</div>' +
   '<button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>' +
   '</form>' +
@@ -75,7 +75,7 @@ actionBtn.addEventListener('click', function (evt) {
     answers[i].checked = false;
   }
 
-  ScreensEngine(genre.events.goTo);
+  screensEngine(genre.events.goTo);
 });
 
 export default genreElem;

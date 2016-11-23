@@ -1,7 +1,7 @@
 import getElementFromTemplate from '../add-template';
-import ScreensEngine from '../game';
+import screensEngine from '../game';
 
-const artist =  {
+const artist = {
   content: {
     title: 'Кто исполняет эту песню?',
     text: {
@@ -54,7 +54,7 @@ let actionBtn = artistElem.querySelector('.main-list');
 
 actionBtn.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('main-answer')) {
-    ScreensEngine(artist.events.goTo);
+    screensEngine(artist.events.goTo);
   }
 });
 

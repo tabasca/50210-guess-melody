@@ -1,8 +1,8 @@
-import ScreensEngine from './game';
+import screensEngine from './game';
 
 (function () {
 
-  ScreensEngine(0);
+  screensEngine(0);
 
 })();
 

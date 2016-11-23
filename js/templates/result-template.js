@@ -1,7 +1,7 @@
 import getElementFromTemplate from '../add-template';
-import ScreensEngine from '../game';
+import screensEngine from '../game';
 
-const result =  {
+const result = {
   content: {
     title: 'Вы настоящий меломан!',
     statistic: {
@@ -29,7 +29,7 @@ let actionBtn = resultElem.querySelector('.main-replay');
 
 actionBtn.addEventListener('click', function (evt) {
   evt.preventDefault();
-  ScreensEngine(result.events.goTo);
+  screensEngine(result.events.goTo);
 });
 
 export default resultElem;
