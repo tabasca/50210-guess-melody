@@ -17,7 +17,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const webpack = require('gulp-webpack');
 
 gulp.task('style', function () {
-  return gulp.src('sass/style.scss')
+  gulp.src('sass/style.scss')
     .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([
@@ -75,7 +75,7 @@ gulp.task('imagemin', ['copy'], function () {
 
 
 gulp.task('copy-html', function () {
-  return gulp.src('src/*.html')
+  return gulp.src('*.html')
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
@@ -89,18 +89,10 @@ gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
 });
 
 gulp.task('clean', function () {
-  return del(['build']);
+  return del('build');
 });
 
-gulp.task('serve', ['assemble', 'web-server']);
-
-gulp.task('assemble', ['clean'], function () {
-  gulp.start('copy', 'style');
-});
-
-gulp.task('build', ['assemble', 'imagemin']);
-
-gulp.task('web-server', function () {
+gulp.task('serve', ['assemble'], function () {
   server.init({
     server: './build',
     notify: false,
@@ -110,7 +102,16 @@ gulp.task('web-server', function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('src/*.html', ['copy-html']);
-  gulp.watch('js/**/*.js', ['scripts']);
-
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
+  gulp.watch('js/**/*.js', ['scripts']).on('change', server.reload);
 });
+
+gulp.task('assemble', ['clean'], function () {
+  gulp.start('copy', 'style');
+});
+
+gulp.task('build', ['assemble', 'imagemin']);
