@@ -1,14 +1,8 @@
-let getElementFromTemplate = (templateHtml, templateClass, additionalClass) => {
-  let template = document.createElement('section');
-  template.classList.add('main');
-  template.classList.add(templateClass);
-
-  if (additionalClass) {
-    template.classList.add(additionalClass);
-  }
-
+let getElementFromTemplate = (templateHtml) => {
+  let template = document.createElement('div');
   template.innerHTML = templateHtml;
-  return template;
+
+  return template.firstChild;
 };
 
 export default getElementFromTemplate;
