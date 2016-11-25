@@ -2,13 +2,6 @@ import {welcomeTemplate, artistTemplate, genreTemplate, resultTemplate} from './
 
 (function () {
 
-  // let template = document.querySelector('template');
-
-  // let loadTemplate = (templateName) => {
-  //   let content = template.content ? template.content : template;
-  //   return content.querySelector(templateName).cloneNode(true);
-  // };
-
   let slides = [
     welcomeTemplate,
     artistTemplate,
@@ -23,7 +16,6 @@ import {welcomeTemplate, artistTemplate, genreTemplate, resultTemplate} from './
     mainElement.parentNode.replaceChild(slides[index], mainElement);
 
     if (index >= 3) {
-      // console.log('prevent js error');
       current = -1;
     }
 
