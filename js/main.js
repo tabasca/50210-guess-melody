@@ -1,4 +1,4 @@
-import {welcomeTemplate, artistTemplate, genreTemplate, resultTemplate} from './htmlTemplates';
+import renderTemplate from './render-template';
 
 (function () {
   renderTemplate(0);
