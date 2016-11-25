@@ -15,15 +15,4 @@ let renderTemplate = (index) => {
   mainElement.parentNode.replaceChild(slides[index], mainElement);
 };
 
-// document.onkeydown = (evt) => {
-//   evt.preventDefault();
-//
-//   switch (evt.keyCode) {
-//     case 37: current--; break;
-//     case 39: current++; break;
-//   }
-//
-//   renderTemplate(current);
-// };
-
 export default renderTemplate;
