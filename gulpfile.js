@@ -14,6 +14,7 @@ const imagemin = require('gulp-imagemin');
 
 const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
+const webpack = require('gulp-webpack');
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -39,14 +40,25 @@ gulp.task('style', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('js/**/*.js')
+  return gulp.src('js/*.js')
     .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['es2015']
+    .pipe(webpack({
+      devtool:'source-map',
+      module: {
+        loaders: [
+          { test: /\.js$/,
+            loader: 'babel-loader',
+            query: {
+              presets: ['es2015']
+            }},
+        ],
+      },
+      output:{
+        filename:'main.js'
+      }
     }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('build/js/'));
+    .pipe(gulp.dest('build/js/'))
+    .pipe(server.stream());
 });
 
 gulp.task('test', function () {
@@ -90,7 +102,11 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
   gulp.watch('js/**/*.js', ['scripts']).on('change', server.reload);
 });
 
