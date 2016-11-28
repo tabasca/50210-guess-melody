@@ -1,16 +1,16 @@
 import getElementFromTemplate from '../add-template';
 import screensEngine from '../game';
 
+const tracks = new Set([
+  {value: 'answer-1'},
+  {value: 'answer-2'},
+  {value: 'answer-3'},
+  {value: 'answer-4'}
+]);
+
 const genre = {
-  content: {
-    title: 'Выберите инди-рок треки',
-    value: {
-      a1: 'answer-1',
-      a2: 'answer-2',
-      a3: 'answer-3',
-      a4: 'answer-4'
-    }
-  },
+  title: 'Выберите инди-рок треки',
+  answer: tracks,
   state: {
     isValid: 'true'
   },
@@ -19,25 +19,26 @@ const genre = {
   }
 };
 
+const getAnswers = (list) => {
+  let answer = '';
+  let counter = 0;
+
+  for (let it of list) {
+    counter++;
+
+    answer += '<div class="genre-answer">' +
+      '<div class="player-wrapper"></div>' +
+      '<input type="checkbox" name="answer" value="' + it.value + '" id="a-' + counter + '"><label class="genre-answer-check" for="a-' + counter + '"></label>' +
+      '</div>';
+  }
+
+  return answer;
+};
+
 const content = '<section class="main main--level main--level-genre">' +
-  '<h2 class="title">' + genre.content.title + '</h2>' +
+  '<h2 class="title">' + genre.title + '</h2>' +
   '<form class="genre">' +
-  '<div class="genre-answer">' +
-  '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a1 + '" id="a-1"><label class="genre-answer-check" for="a-1"></label>' +
-  '</div>' +
-  '<div class="genre-answer">' +
-  '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a2 + '" id="a-2"><label class="genre-answer-check" for="a-2"></label>' +
-  '</div>' +
-  '<div class="genre-answer">' +
-  '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a3 + '" id="a-3"><label class="genre-answer-check" for="a-3"></label>' +
-  '</div>' +
-  '<div class="genre-answer">' +
-  '<div class="player-wrapper"></div>' +
-  '<input type="checkbox" name="answer" value="' + genre.content.value.a4 + '" id="a-4"><label class="genre-answer-check" for="a-4"></label>' +
-  '</div>' +
+  getAnswers(genre.answer) +
   '<button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>' +
   '</form>' +
   '</section>';
@@ -51,8 +52,8 @@ let answersContainer = genreElem.querySelector('.genre');
 
 answersContainer.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('genre-answer-check')) {
-    for (let i = 0; i < answers.length; i++) {
-      if (answers[i].checked === true) {
+    for (let it of answers) {
+      if (it.checked === true) {
         actionBtn.removeAttribute('disabled', 'disabled');
         genre.state.isValid = 'true';
       }
@@ -71,9 +72,11 @@ answersContainer.addEventListener('click', function (evt) {
 actionBtn.addEventListener('click', function (evt) {
   evt.preventDefault();
 
-  for (let i = 0; i < answers.length; i++) {
-    answers[i].checked = false;
+  for (let it of answers) {
+    it.checked = false;
   }
+
+  actionBtn.setAttribute('disabled', 'disabled');
 
   screensEngine(genre.events.goTo);
 });
