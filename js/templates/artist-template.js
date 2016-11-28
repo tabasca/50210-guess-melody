@@ -1,54 +1,69 @@
 import getElementFromTemplate from '../add-template';
-import renderTemplate from '../render-template';
+import screensEngine from '../game';
 
-const artistTemplate = getElementFromTemplate('<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">\n' +
-  '<circle\n' +
-  'cx="390" cy="390" r="370"\n' +
-  'class="timer-line"\n' +
-  'style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>\n' +
-  '<div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">\n' +
-  '<span class="timer-value-mins">02</span><!--\n' +
-  '--><span class="timer-value-dots">:</span><!--\n' +
-  '--><span class="timer-value-secs">00</span>\n' +
-  '</div>\n' +
-  '</svg>\n' +
-  '<div class="main-wrap">\n' +
-  '<div class="main-timer"></div>\n' +
-  '<h2 class="title main-title">Кто исполняет эту песню?</h2>\n' +
-  '<div class="player-wrapper"></div>\n' +
-  '<form class="main-list">\n' +
-  '<div class="main-answer-wrapper">\n' +
-  '<input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1" />\n' +
-  '<label class="main-answer" for="answer-1">\n' +
-  '<img class="main-answer-preview" src="">\n' +
-  'Пелагея\n' +
-  '</label>\n' +
-  '</div>\n' +
-  '<div class="main-answer-wrapper">\n' +
-  '<input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />\n' +
-  '<label class="main-answer" for="answer-2">\n' +
-  '<img class="main-answer-preview" src="">\n' +
-  'Краснознаменная дивизия имени моей бабушки\n' +
-  '</label>\n' +
-  '</div>\n' +
-  '<div class="main-answer-wrapper">\n' +
-  '<input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />\n' +
-  '<label class="main-answer" for="answer-2">\n' +
-  '<img class="main-answer-preview" src="">\n' +
-  'Lorde\n' +
-  '</label>\n' +
-  '</div>\n' +
-  '</form>\n' +
-  '</div>', 'main--level-artist', 'main--level');
+const answers = new Set([
+  {image: '', text: 'Пелагея'},
+  {image: '', text: 'Краснознаменная дивизия имени моей бабушки'},
+  {image: '', text: 'Lorde'}
+]);
 
-let body = document.querySelector('body');
+const artist = {
+  title: 'Кто исполняет эту песню?',
+  text: answers,
+  events: {
+    goTo: 2,
+  }
+};
 
-body.addEventListener('click', function (evt) {
+const getAnswers = (list) => {
+  let answer = '';
+  let counter = 0;
 
+  for (let it of list) {
+    counter++;
+
+    answer += '<div class="main-answer-wrapper">' +
+      '<input class="main-answer-r" type="radio" id="answer-' + counter + '" name="answer" value="val-' + counter + '" />' +
+      '<label class="main-answer" for="answer-' + counter + '"><img class="main-answer-preview" src="' + it.image + '">' + it.text + '</label>' +
+      '</div>';
+  }
+
+  return answer;
+};
+
+const timer = '<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">' +
+  '<circle ' +
+  'cx="390" cy="390" r="370" ' +
+  'class="timer-line" ' +
+  'style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center">' +
+  '</circle>' +
+  '<div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">' +
+  '<span class="timer-value-mins">02</span><!--' +
+  '--><span class="timer-value-dots">:</span><!--' +
+  '--><span class="timer-value-secs">00</span>' +
+  '</div>' +
+  '</svg>';
+
+const content = '<section class="main main--level main--level-artist">' +
+  timer +
+  '<div class="main-wrap">' +
+  '<div class="main-timer"></div>' +
+  '<h2 class="title main-title">' + artist.title + '</h2>' +
+  '<div class="player-wrapper"></div>' +
+  '<form class="main-list">' +
+  getAnswers(artist.text) +
+  '</form>' +
+  '</div>' +
+  '</section>';
+
+const artistElem = getElementFromTemplate(content);
+
+let actionBtn = artistElem.querySelector('.main-list');
+
+actionBtn.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('main-answer')) {
-    renderTemplate(2);
+    screensEngine(artist.events.goTo);
   }
 });
 
-
-export default artistTemplate;
+export default artistElem;

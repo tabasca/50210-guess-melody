@@ -1,61 +1,84 @@
 import getElementFromTemplate from '../add-template';
-import renderTemplate from '../render-template';
+import screensEngine from '../game';
 
-const genreTemplate = getElementFromTemplate('<h2 class="title">Выберите инди-рок треки</h2>\n' +
-  '<form class="genre">\n' +
-  '<div class="genre-answer">\n' +
-  '<div class="player-wrapper"></div>\n' +
-  '<input type="checkbox" name="answer" value="answer-1" id="a-1">\n' +
-  '<label class="genre-answer-check" for="a-1"></label>\n' +
-  '</div>\n' +
-  '<div class="genre-answer">\n' +
-  '<div class="player-wrapper"></div>\n' +
-  '<input type="checkbox" name="answer" value="answer-1" id="a-2">\n' +
-  '<label class="genre-answer-check" for="a-2"></label>\n' +
-  '</div>\n' +
-  '<div class="genre-answer">\n' +
-  '<div class="player-wrapper"></div>\n' +
-  '<input type="checkbox" name="answer" value="answer-1" id="a-3">\n' +
-  '<label class="genre-answer-check" for="a-3"></label>\n' +
-  '</div>\n' +
-  '<div class="genre-answer">\n' +
-  '<div class="player-wrapper"></div>\n' +
-  '<input type="checkbox" name="answer" value="answer-1" id="a-4">\n' +
-  '<label class="genre-answer-check" for="a-4"></label>\n' +
-  '</div>\n' +
-  '<button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>\n' +
-  '</form>', 'main--level', 'main--level-genre');
+const tracks = new Set([
+  {value: 'answer-1'},
+  {value: 'answer-2'},
+  {value: 'answer-3'},
+  {value: 'answer-4'}
+]);
 
-let body = document.querySelector('body');
+const genre = {
+  title: 'Выберите инди-рок треки',
+  answer: tracks,
+  state: {
+    isValid: 'true'
+  },
+  events: {
+    goTo: 3
+  }
+};
 
-body.addEventListener('click', function (evt) {
+const getAnswers = (list) => {
+  let answer = '';
+  let counter = 0;
 
-  let checkedAnswers = document.querySelectorAll('input[type="checkbox"]');
-  let submitBtn = document.querySelector('.genre-answer-send');
+  for (let it of list) {
+    counter++;
 
-  if (submitBtn) {
+    answer += '<div class="genre-answer">' +
+      '<div class="player-wrapper"></div>' +
+      '<input type="checkbox" name="answer" value="' + it.value + '" id="a-' + counter + '"><label class="genre-answer-check" for="a-' + counter + '"></label>' +
+      '</div>';
+  }
 
-    let disableBtn = true;
+  return answer;
+};
 
-    for (let i = 0; i < checkedAnswers.length; i++) {
-      if (checkedAnswers[i].checked === true) {
-        submitBtn.removeAttribute('disabled', 'disabled');
-        disableBtn = false;
+const content = '<section class="main main--level main--level-genre">' +
+  '<h2 class="title">' + genre.title + '</h2>' +
+  '<form class="genre">' +
+  getAnswers(genre.answer) +
+  '<button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>' +
+  '</form>' +
+  '</section>';
+
+const genreElem = getElementFromTemplate(content);
+
+let actionBtn = genreElem.querySelector('.genre-answer-send');
+
+let answers = genreElem.querySelectorAll('input[type="checkbox"]');
+let answersContainer = genreElem.querySelector('.genre');
+
+answersContainer.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('genre-answer-check')) {
+    for (let it of answers) {
+      if (it.checked === true) {
+        actionBtn.removeAttribute('disabled', 'disabled');
+        genre.state.isValid = 'true';
       }
     }
 
-    if (disableBtn) {
-      submitBtn.setAttribute('disabled', 'disabled');
+    if (genre.state.isValid === 'false') {
+      actionBtn.setAttribute('disabled', 'disabled');
     } else {
-      submitBtn.removeAttribute('disabled', 'disabled');
+      actionBtn.removeAttribute('disabled', 'disabled');
     }
   }
 
-  if (evt.target.classList.contains('genre-answer-send')) {
-    evt.preventDefault();
-
-    renderTemplate(3);
-  }
 });
 
-export default genreTemplate;
+
+actionBtn.addEventListener('click', function (evt) {
+  evt.preventDefault();
+
+  for (let it of answers) {
+    it.checked = false;
+  }
+
+  actionBtn.setAttribute('disabled', 'disabled');
+
+  screensEngine(genre.events.goTo);
+});
+
+export default genreElem;

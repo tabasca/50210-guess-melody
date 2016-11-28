@@ -1,6 +1,8 @@
-import renderTemplate from './render-template';
+import screensEngine from './game';
 
 (function () {
-  renderTemplate(0);
+
+  screensEngine(0);
+
 })();
 

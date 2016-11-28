@@ -1,23 +1,30 @@
 import getElementFromTemplate from '../add-template';
-import renderTemplate from '../render-template';
+import screensEngine from '../game';
 
-const welcomeTemplate = getElementFromTemplate('<section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>\n' +
-  '<button class="main-play">Начать игру</button>\n' +
-  '<h2 class="title main-title">Правила игры</h2>\n' +
-  '<p class="text main-text">\n' +
-  'Правила просты&nbsp;— за&nbsp;2 минуты дать\n' +
-  'максимальное количество правильных ответов.<br>\n' +
-  'На&nbsp;каждую мелодию всего 3 варианта ответа.<br>\n' +
-  'Удачи!\n' +
-  '</p>', 'main--welcome');
-
-let body = document.querySelector('body');
-
-body.addEventListener('click', function (evt) {
-
-  if (evt.target.classList.contains('main-play')) {
-    renderTemplate(1);
+const welcome = {
+  title: 'Правила игры',
+  text: 'Правила просты&nbsp;— за&nbsp;2 минуты дать максимальное количество правильных ответов.<br>На&nbsp;каждую мелодию всего 3 варианта ответа.<br>Удачи!',
+  events: {
+    goTo: 1,
   }
+};
+
+const logo = '<section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>';
+
+const content = '<section class="main main--welcome">' +
+  logo +
+  '<button class="main-play">Начать игру</button>' +
+  '<h2 class="title main-title">' + welcome.title + '</h2>' +
+  '<p class="text main-text">' + welcome.text + '</p>' +
+  '</section>';
+
+const welcomeElem = getElementFromTemplate(content);
+
+let actionBtn = welcomeElem.querySelector('.main-play');
+
+actionBtn.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  screensEngine(welcome.events.goTo);
 });
 
-export default welcomeTemplate;
+export default welcomeElem;
