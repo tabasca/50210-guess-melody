@@ -15,9 +15,11 @@ export default (screen) => {
   if (screen) {
     screenToRender = screen;
   } else {
-    if (currentQuestion.type.toLowerCase() === 'artist') {
+    let currentQuestionType = currentQuestion.type.toLowerCase();
+
+    if (currentQuestionType === 'artist') {
       screenToRender = getArtistTemplate(currentQuestion);
-    } else if (currentQuestion.type.toLowerCase() === 'genre') {
+    } else if (currentQuestionType === 'genre') {
       screenToRender = getGenreTemplate(currentQuestion);
     }
 
@@ -34,6 +36,5 @@ export default (screen) => {
 
   appContainer.parentNode.appendChild(screenToRender);
   appContainer.parentNode.removeChild(appContainer);
-
 
 };

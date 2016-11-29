@@ -37,12 +37,12 @@ export default (data) => {
 
   answersContainer.addEventListener('change', function (evt) {
     for (let it of answers) {
-      if (it.checked === true) {
+      if (it.checked) {
         isValid = 'true';
       }
     }
 
-    if (isValid === 'false') {
+    if (!isValid) {
       actionBtn.setAttribute('disabled', 'disabled');
     } else {
       actionBtn.removeAttribute('disabled', 'disabled');
