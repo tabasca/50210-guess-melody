@@ -1,20 +1,6 @@
 import getElementFromTemplate from '../add-template';
 import screensEngine from '../game';
 
-const answers = new Set([
-  {image: '', text: 'Пелагея'},
-  {image: '', text: 'Краснознаменная дивизия имени моей бабушки'},
-  {image: '', text: 'Lorde'}
-]);
-
-const artist = {
-  title: 'Кто исполняет эту песню?',
-  text: answers,
-  events: {
-    goTo: 2,
-  }
-};
-
 const getAnswers = (list) => {
   let answer = '';
   let counter = 0;
@@ -44,26 +30,28 @@ const timer = '<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 
   '</div>' +
   '</svg>';
 
-const content = '<section class="main main--level main--level-artist">' +
-  timer +
-  '<div class="main-wrap">' +
-  '<div class="main-timer"></div>' +
-  '<h2 class="title main-title">' + artist.title + '</h2>' +
-  '<div class="player-wrapper"></div>' +
-  '<form class="main-list">' +
-  getAnswers(artist.text) +
-  '</form>' +
-  '</div>' +
-  '</section>';
+export default (data) => {
+  const content = `<section class="main main--level main--level-artist">
+        ${timer}
+        <div class="main-wrap">
+          <div class="main-timer"></div>
+          <h2 class="title main-title">${data.title}</h2>
+          <div class="player-wrapper"></div>
+          <form class="main-list">
+            ${getAnswers(data.answers)}
+          </form>
+        </div>
+      </section>`;
 
-const artistElem = getElementFromTemplate(content);
+  let elem = getElementFromTemplate(content);
 
-let actionBtn = artistElem.querySelector('.main-list');
+  let actionBtn = elem.querySelector('.main-list');
 
-actionBtn.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('main-answer')) {
-    screensEngine(artist.events.goTo);
-  }
-});
+  actionBtn.addEventListener('click', function (evt) {
+    if (evt.target.classList.contains('main-answer')) {
+      screensEngine();
+    }
+  });
 
-export default artistElem;
+  return elem;
+};
