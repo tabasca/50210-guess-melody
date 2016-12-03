@@ -16,6 +16,9 @@ const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 const webpack = require('gulp-webpack');
 
+const mocha = require('gulp-mocha'); // Добавим установленный gulp-mocha плагин
+require('babel-register');   // Добавим поддержку "import/export" из ES2015
+
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
     .pipe(plumber())
@@ -62,6 +65,14 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('test', function () {
+  return gulp
+    .src(['js/**/*.test.js'], { read: false })
+    .pipe(mocha({
+      compilers: {
+        js: 'babel-register' // Включим поддержку "import/export" в Mocha
+      },
+      reporter: 'spec'       // Вид в котором я хочу отображать результаты тестирования
+    }));
 });
 
 gulp.task('imagemin', ['copy'], function () {
