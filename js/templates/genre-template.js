@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../add-template';
-import screensEngine from '../game';
+import {screensEngine} from '../game';
 
 const getAnswers = (list) => {
   let answer = '';
