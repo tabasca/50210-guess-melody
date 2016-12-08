@@ -12,11 +12,12 @@ const questions = [
     type: 'genre',
     title: 'Выберите инди-рок треки',
     answers: new Set([
-      {value: 'answer-1', isCorrect: 'true'},
-      {value: 'answer-2', isCorrect: 'false'},
-      {value: 'answer-3', isCorrect: 'true'},
-      {value: 'answer-4', isCorrect: 'false'}
-    ])
+      {value: 'answer-1', isCorrect: true},
+      {value: 'answer-2', isCorrect: false},
+      {value: 'answer-3', isCorrect: true},
+      {value: 'answer-4', isCorrect: false}
+    ]),
+    correctAnswers: 2
   },
   {
     type: 'artist',
@@ -40,36 +41,36 @@ const questions = [
     type: 'artist',
     title: 'Кто исполняет эту песню?',
     answers: new Set([
-      {image: '', text: 'Paramore', isCorrect: 'false'},
-      {image: '', text: 'Arctic Monkeys', isCorrect: 'true'},
-      {image: '', text: 'Era', isCorrect: 'false'}
+      {image: '', text: 'Paramore', isCorrect: false},
+      {image: '', text: 'Arctic Monkeys', isCorrect: true},
+      {image: '', text: 'Era', isCorrect: false}
     ])
   },
   {
     type: 'artist',
     title: 'Кто исполняет эту песню?',
     answers: new Set([
-      {image: '', text: 'KONGOS', isCorrect: 'false'},
-      {image: '', text: 'Kosheen', isCorrect: 'true'},
-      {image: '', text: 'Unkle', isCorrect: 'false'}
+      {image: '', text: 'KONGOS', isCorrect: false},
+      {image: '', text: 'Kosheen', isCorrect: true},
+      {image: '', text: 'Unkle', isCorrect: false}
     ])
   },
   {
     type: 'artist',
     title: 'Кто исполняет эту песню?',
     answers: new Set([
-      {image: '', text: 'Sia', isCorrect: 'false'},
-      {image: '', text: 'Lady Gaga', isCorrect: 'false'},
-      {image: '', text: 'Madonna', isCorrect: 'true'}
+      {image: '', text: 'Sia', isCorrect: false},
+      {image: '', text: 'Lady Gaga', isCorrect: false},
+      {image: '', text: 'Madonna', isCorrect: true}
     ])
   },
   {
     type: 'artist',
     title: 'Кто исполняет эту песню?',
     answers: new Set([
-      {image: '', text: 'Алла Пугачева', isCorrect: 'true'},
-      {image: '', text: 'Кристина Орбакайте', isCorrect: 'false'},
-      {image: '', text: 'Филипп Киркоров', isCorrect: 'false'}
+      {image: '', text: 'Алла Пугачева', isCorrect: true},
+      {image: '', text: 'Кристина Орбакайте', isCorrect: false},
+      {image: '', text: 'Филипп Киркоров', isCorrect: false}
     ])
   },
   {
@@ -85,9 +86,9 @@ const questions = [
     type: 'artist',
     title: 'Кто исполняет эту песню?',
     answers: new Set([
-      {image: '', text: 'Britney Spears', isCorrect: 'false'},
-      {image: '', text: 'Black Sabbath', isCorrect: 'false'},
-      {image: '', text: 'Eminem', isCorrect: 'true'}
+      {image: '', text: 'Britney Spears', isCorrect: false},
+      {image: '', text: 'Black Sabbath', isCorrect: false},
+      {image: '', text: 'Eminem', isCorrect: true}
     ])
   }
 ];

@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../add-template';
-import screensEngine from '../game';
+import {startGame} from '../game';
 import getWelcomeTemplate from '../templates/welcome-template';
 import {welcome} from '../data/welcome';
 
@@ -23,7 +23,7 @@ export default (data) => {
   actionBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    screensEngine(getWelcomeTemplate(welcome));
+    startGame(getWelcomeTemplate(welcome));
   });
 
   return elem;

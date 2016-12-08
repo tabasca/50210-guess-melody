@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../add-template';
-import {screensEngine} from '../game';
+import {nextQuestion} from '../game';
 
 const getAnswers = (list) => {
   let answer = '';
@@ -37,9 +37,9 @@ export default (data) => {
     if (evt.target.classList.contains('main-answer-r')) {
 
       let arrOfAnswers = Array.from(data.answers);
-      let isAnswerCorrect = arrOfAnswers[evt.target.value - 1].isCorrect;
+      let answers = arrOfAnswers[evt.target.value - 1];
 
-      screensEngine(false, isAnswerCorrect);
+      nextQuestion(answers);
     }
   });
 

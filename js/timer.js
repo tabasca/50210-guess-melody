@@ -44,6 +44,8 @@ window.initializeCountdown = (currentTime) => {
   const radius = parseInt(element.getAttributeNS(null, 'r'), 10);
   const timer = document.querySelector('.timer-value');
 
+  timer.classList.remove('timer-value--finished');
+
   if (!currentTime) {
     currentTime = 0;
   }

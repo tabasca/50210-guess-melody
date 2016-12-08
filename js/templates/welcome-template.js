@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../add-template';
-import screensEngine from '../game';
+import {nextQuestion} from '../game';
 
 const logo = '<section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>';
 
@@ -18,7 +18,7 @@ export default (data) => {
   actionBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    screensEngine();
+    nextQuestion();
   });
 
   return elem;
