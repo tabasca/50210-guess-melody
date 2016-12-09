@@ -6,7 +6,7 @@ import {welcome} from '../data/welcome';
 const logo = '<section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>';
 
 export default (data) => {
-  const stats = `<div class="main-stat">За&nbsp;${data.stats.time}&nbsp;минуты<br>вы&nbsp;отгадали${data.stats.count}&nbsp;мелодии</div>
+  const stats = `<div class="main-stat">За&nbsp;${data.stats.time}&nbsp;минуты<br>вы&nbsp;отгадали ${data.stats.score}&nbsp;мелодии</div>
         <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${data.stats.percent}%&nbsp;игроков</span>`;
 
   const content = `<section class="main main--result">

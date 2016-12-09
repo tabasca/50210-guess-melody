@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {setLives, checkIfAnswerIsCorrect, calculateStats} from '../game';
+import {setLives, checkIfAnswerIsCorrect, collectStats, calculateStats} from '../game';
 
 describe('game engine', function () {
   describe('setLives', function () {
@@ -16,9 +16,14 @@ describe('game engine', function () {
     });
 
   });
+  describe('collectStats', function () {
+    it('should throw an error if currentStats is not an object', function () {
+      assert.throws(() => collectStats(true));
+    });
+  });
   describe('calculateStats', function () {
-    it('should throw an error if globalStats is not an object', function () {
-      assert.throws(() => calculateStats({time: 6, answers: 5}, true));
+    it('should throw an error if currentStats.time is not a number', function () {
+      assert.throws(() => calculateStats(true));
     });
   });
 });

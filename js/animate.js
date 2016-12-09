@@ -19,7 +19,11 @@ window.animation = {
       }
     }, animation.stepDuration);
 
-    const stopFn = () => clearInterval(interval);
+    const stopFn = () => {
+      clearInterval(interval);
+
+      return animation.step;
+    };
 
     return stopFn;
   }
