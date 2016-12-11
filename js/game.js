@@ -61,17 +61,17 @@ export const collectStats = (currentStats) => {
 
 };
 
-export const calculateStats = (currentsStats, stats) => {
+export const calculateStats = (currentStats, stats) => {
 
-  if (typeof currentsStats.time !== 'number') {
+  if (typeof currentStats.time !== 'number') {
     throw new RangeError('currentsStats.time must be a number');
   }
 
   let positionForUsersStats = 0;
 
   for (let i = 0; i < stats.length; i++) {
-    if (stats[i].score <= currentsStats.score) {
-      if (stats[i].time >= currentsStats.time) {
+    if (stats[i].score <= currentStats.score) {
+      if (stats[i].time >= currentStats.time) {
         positionForUsersStats = i;
         break;
       }
@@ -80,10 +80,10 @@ export const calculateStats = (currentsStats, stats) => {
     }
   }
 
-  stats.splice(positionForUsersStats, 0, currentsStats);
+  stats.splice(positionForUsersStats, 0, currentStats);
 
-  newResult.stats.time = parseFloat(currentsStats.time / 60).toFixed(2);
-  newResult.stats.score = currentsStats.score;
+  newResult.stats.time = parseFloat(currentStats.time / 60).toFixed(2);
+  newResult.stats.score = currentStats.score;
   newResult.stats.percent = Math.floor(((stats.length - (positionForUsersStats + 1)) / stats.length) * 100);
 
 };
@@ -123,14 +123,11 @@ export const nextQuestion = (answers) => {
       answers.forEach(function (answer) {
         arrOfAnswers.push(checkIfAnswerIsCorrect(answer));
       });
-      for (let it of arrOfAnswers) {
-        if (it === false) {
-          isAnswerCorrect = false;
-          break;
-        }
 
-        isAnswerCorrect = true;
-      }
+      isAnswerCorrect = arrOfAnswers.every(function (answer) {
+        return answer;
+      });
+
     } else {
       isAnswerCorrect = checkIfAnswerIsCorrect(answers);
     }
