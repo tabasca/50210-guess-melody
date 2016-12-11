@@ -124,9 +124,11 @@ export const nextQuestion = (answers) => {
         arrOfAnswers.push(checkIfAnswerIsCorrect(answer));
       });
 
-      isAnswerCorrect = arrOfAnswers.every(function (answer) {
-        return answer;
+      let areAnswersIncorrect = arrOfAnswers.find(function (answer) {
+        return answer === false;
       });
+
+      isAnswerCorrect = areAnswersIncorrect === undefined;
 
     } else {
       isAnswerCorrect = checkIfAnswerIsCorrect(answers);
