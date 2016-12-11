@@ -128,7 +128,7 @@ export const nextQuestion = (answers) => {
         return answer === false;
       });
 
-      isAnswerCorrect = areAnswersIncorrect === undefined;
+      isAnswerCorrect = areAnswersIncorrect !== false;
 
     } else {
       isAnswerCorrect = checkIfAnswerIsCorrect(answers);
