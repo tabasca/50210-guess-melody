@@ -125,7 +125,7 @@ export const nextQuestion = (answers) => {
       });
 
       let areAnswersIncorrect = arrOfAnswers.find(function (answer) {
-        return answer === false;
+        return !answer;
       });
 
       isAnswerCorrect = areAnswersIncorrect !== false;
@@ -143,9 +143,9 @@ export const nextQuestion = (answers) => {
 
   if (stateToAssign.question >= questions.length || stateToAssign.lives < 1) {
 
-    let staticStats = globalStats.slice(0);
+    const staticStats = globalStats.slice(0);
 
-    let time = timer();
+    const time = timer();
 
     stateToAssign.time = time;
 
