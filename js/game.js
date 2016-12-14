@@ -8,7 +8,7 @@ import {completeAssign} from './utils';
 let screenToRender = '';
 let timer = '';
 
-let initialState = {
+export const initialState = {
   lives: 3,
   question: 0,
   time: 120,
@@ -88,7 +88,7 @@ export const calculateStats = (currentStats, stats) => {
 
 };
 
-let toggleTimer = (time) => {
+export const toggleTimer = (time) => {
   timer = window.initializeCountdown(time);
 };
 
