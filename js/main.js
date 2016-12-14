@@ -1,8 +1,8 @@
-import screensEngine from './game';
+import {startGame} from './game';
 import getWelcomeTemplate from './templates/welcome-template';
 import {welcome} from './data/welcome';
 
 (function () {
-  screensEngine(getWelcomeTemplate(welcome));
+  startGame(getWelcomeTemplate(welcome));
 })();
 

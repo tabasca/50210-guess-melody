@@ -14,7 +14,7 @@
 const redrawCircle = (circle, radius, animation) => {
   const length = 2 * Math.PI * radius;
   const stepLength = length / animation.steps;
-  const lengthToClear = stepLength * animation.step;
+  let lengthToClear = stepLength * animation.step;
 
   circle.setAttributeNS(null, 'r', radius.toString());
   circle.setAttributeNS(null, 'stroke-dasharray', length.toString());
@@ -39,12 +39,18 @@ const redrawTimer = (timer, animation) => {
 };
 
 
-window.initializeCountdown = () => {
+window.initializeCountdown = (currentTime) => {
   const element = document.querySelector('.timer-line');
   const radius = parseInt(element.getAttributeNS(null, 'r'), 10);
   const timer = document.querySelector('.timer-value');
 
-  return window.animation.animate(window.animation.getAnimation(0, 1000, 4), (animation) => {
+  timer.classList.remove('timer-value--finished');
+
+  if (!currentTime) {
+    currentTime = 0;
+  }
+
+  return window.animation.animate(window.animation.getAnimation(0, 1000, currentTime), (animation) => {
     redrawCircle(element, radius, animation);
     redrawTimer(timer, animation);
   }, () => timer.classList.add('timer-value--finished'));

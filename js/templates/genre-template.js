@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../add-template';
-import screensEngine from '../game';
+import {nextQuestion} from '../game';
 
 const getAnswers = (list) => {
   let answer = '';
@@ -35,9 +35,13 @@ export default (data) => {
 
   let isValid = 'false';
 
+  let checkedAnswers = [];
+
   answersContainer.addEventListener('change', function (evt) {
+    checkedAnswers = [];
     for (let it of answers) {
       if (it.checked) {
+        checkedAnswers.push(it.value);
         isValid = 'true';
       }
     }
@@ -53,13 +57,28 @@ export default (data) => {
   actionBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
 
+    let arrOfAnswers = Array.from(data.answers);
+    let answersToCheck = [];
+
+    for (let it of checkedAnswers) {
+      for (let answer of arrOfAnswers) {
+        if (answer.value === it) {
+          answersToCheck.push(answer);
+        }
+      }
+    }
+
+    if (answersToCheck.length < data.correctAnswers) {
+      answersToCheck = {isCorrect: false};
+    }
+
     for (let it of answers) {
       it.checked = false;
     }
 
     actionBtn.setAttribute('disabled', 'disabled');
 
-    screensEngine();
+    nextQuestion(answersToCheck);
   });
 
   return elem;
