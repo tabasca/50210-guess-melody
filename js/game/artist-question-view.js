@@ -1,34 +1,34 @@
 import AbstractView from './view';
 
 export default class ArtistQuestionView extends AbstractView {
-	constructor(data) {
-		super();
+  constructor(data) {
+    super();
 
-		this.question = data;
-	}
+    this.question = data;
+  }
 
-	set onAnswer(handler) {
-		this._onAnswer = handler;
-	}
+  set onAnswer(handler) {
+    this._onAnswer = handler;
+  }
 
-	getAnswers(list) {
-		let answer = '';
-		let counter = 0;
+  getAnswers(list) {
+    let answer = '';
+    let counter = 0;
 
-		for (let it of list) {
-			counter++;
+    for (let it of list) {
+      counter++;
 
-			answer += '<div class="main-answer-wrapper">' +
-				'<input class="main-answer-r" type="radio" id="answer-' + counter + '" name="answer" value="' + counter + '" />' +
-				'<label class="main-answer" for="answer-' + counter + '"><img class="main-answer-preview" src="' + it.image + '">' + it.text + '</label>' +
-				'</div>';
-		}
+      answer += '<div class="main-answer-wrapper">' +
+        '<input class="main-answer-r" type="radio" id="answer-' + counter + '" name="answer" value="' + counter + '" />' +
+        '<label class="main-answer" for="answer-' + counter + '"><img class="main-answer-preview" src="' + it.image + '">' + it.text + '</label>' +
+        '</div>';
+    }
 
-		return answer;
-	}
+    return answer;
+  }
 
-	getMarkup() {
-		return `<section class="main main--level main--level-artist">
+  getMarkup() {
+    return `<section class="main main--level main--level-artist">
         <div class="main-wrap">
           <div class="main-timer"></div>
           <h2 class="title main-title">${this.question.title}</h2>
@@ -38,20 +38,20 @@ export default class ArtistQuestionView extends AbstractView {
           </form>
         </div>
       </section>`;
-	}
+  }
 
-	bindHandlers() {
-		let that = this;
-		this.actionBtn = this._elem.querySelector('.main-list');
+  bindHandlers() {
+    let that = this;
+    this.actionBtn = this._elem.querySelector('.main-list');
 
-		this.actionBtn.addEventListener('click', function (evt) {
-			if (evt.target.classList.contains('main-answer-r')) {
+    this.actionBtn.addEventListener('click', function (evt) {
+      if (evt.target.classList.contains('main-answer-r')) {
 
-				let arrOfAnswers = Array.from(that.question.answers);
-				let answers = arrOfAnswers[evt.target.value - 1];
+        let arrOfAnswers = Array.from(that.question.answers);
+        let answers = arrOfAnswers[evt.target.value - 1];
 
-				that._onAnswer(that.model, answers);
-			}
-		});
-	}
+        that._onAnswer(that.model, answers);
+      }
+    });
+  }
 }
