@@ -5,8 +5,6 @@ export default class WelcomeView extends AbstractView {
 		super();
 
 		this.welcome = data;
-
-		this.actionBtn = this.elem.querySelector('.main-play');
 	}
 
 	set onAnswer(handler) {
@@ -25,10 +23,15 @@ export default class WelcomeView extends AbstractView {
 	}
 
 	bindHandlers() {
+		let that = this;
+
+		this.actionBtn = this._elem.querySelector('.main-play');
+
 		this.actionBtn.addEventListener('click', function (evt) {
 			evt.preventDefault();
 
-			//nextQuestion;
+			that._onAnswer(that.model);
 		});
 	}
 }
+

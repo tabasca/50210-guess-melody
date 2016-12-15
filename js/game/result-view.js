@@ -5,8 +5,6 @@ export default class ResultView extends AbstractView {
 		super();
 
 		this.result = data;
-
-		this.actionBtn = this.elem.querySelector('.main-replay');
 	}
 
 	set onAnswer(handler) {
@@ -27,10 +25,13 @@ export default class ResultView extends AbstractView {
 	}
 
 	bindHandlers() {
+		let that = this;
+		this.actionBtn = this._elem.querySelector('.main-replay');
+
 		this.actionBtn.addEventListener('click', function (evt) {
 			evt.preventDefault();
 
-			//startGame(getWelcomeTemplate(welcome));
+			that._onAnswer(that.model, null);
 		});
 	}
 }

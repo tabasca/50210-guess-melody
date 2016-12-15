@@ -5,8 +5,6 @@ export default class ArtistQuestionView extends AbstractView {
 		super();
 
 		this.question = data;
-
-		this.actionBtn = this.elem.querySelector('.main-list');
 	}
 
 	set onAnswer(handler) {
@@ -44,13 +42,15 @@ export default class ArtistQuestionView extends AbstractView {
 
 	bindHandlers() {
 		let that = this;
+		this.actionBtn = this._elem.querySelector('.main-list');
+
 		this.actionBtn.addEventListener('click', function (evt) {
 			if (evt.target.classList.contains('main-answer-r')) {
 
 				let arrOfAnswers = Array.from(that.question.answers);
 				let answers = arrOfAnswers[evt.target.value - 1];
 
-				//nextQuestion(answers);
+				that._onAnswer(that.model, answers);
 			}
 		});
 	}

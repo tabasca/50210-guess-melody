@@ -6,10 +6,6 @@ export default class GenreQuestionView extends AbstractView {
 
 		this.question = data;
 
-		this.answersContainer = this.elem.querySelector('.genre');
-		this.answers = this.elem.querySelectorAll('input[type="checkbox"]');
-		this.actionBtn = this.elem.querySelector('.genre-answer-send');
-
 		this.isValid = 'false';
 		this.checkedAnswers = [];
 	}
@@ -46,6 +42,11 @@ export default class GenreQuestionView extends AbstractView {
 
 	bindHandlers() {
 		let that = this;
+
+		this.answersContainer = this._elem.querySelector('.genre');
+		this.answers = this._elem.querySelectorAll('input[type="checkbox"]');
+		this.actionBtn = this._elem.querySelector('.genre-answer-send');
+
 		this.answersContainer.addEventListener('change', function (evt) {
 			that.checkedAnswers = [];
 			for (let it of that.answers) {
@@ -65,7 +66,7 @@ export default class GenreQuestionView extends AbstractView {
 		this.actionBtn.addEventListener('click', function (evt) {
 			evt.preventDefault();
 
-			let arrOfAnswers = Array.from(data.answers);
+			let arrOfAnswers = Array.from(that.question.answers);
 			let answersToCheck = [];
 
 			for (let it of that.checkedAnswers) {
@@ -85,6 +86,8 @@ export default class GenreQuestionView extends AbstractView {
 			}
 
 			that.actionBtn.setAttribute('disabled', 'disabled');
+
+			that._onAnswer(that.model, answersToCheck);
 		});
 	}
 }
