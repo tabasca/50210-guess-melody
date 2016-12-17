@@ -1,14 +1,11 @@
 import AbstractView from './view';
+import Application from './game-view';
 
 export default class ResultView extends AbstractView {
   constructor(data) {
     super();
 
     this.result = data;
-  }
-
-  set onAnswer(handler) {
-    this._onAnswer = handler;
   }
 
   getMarkup() {
@@ -25,13 +22,12 @@ export default class ResultView extends AbstractView {
   }
 
   bindHandlers() {
-    let that = this;
     this.actionBtn = this._elem.querySelector('.main-replay');
 
     this.actionBtn.addEventListener('click', function (evt) {
       evt.preventDefault();
 
-      that._onAnswer(that.model, null);
+      Application.showWelcome();
     });
   }
 }

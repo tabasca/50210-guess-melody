@@ -50,7 +50,7 @@ export default class ArtistQuestionView extends AbstractView {
         let arrOfAnswers = Array.from(that.question.answers);
         let answers = arrOfAnswers[evt.target.value - 1];
 
-        that._onAnswer(that.model, answers);
+        that._onAnswer(answers);
       }
     });
   }

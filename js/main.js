@@ -1,9 +1,8 @@
-import GameModel from './game/game-model';
+import Application from './game/game-view';
 
 (function () {
 
-  const Game = new GameModel();
-  Game.startGame();
+  Application.showWelcome();
 
 })();
 

@@ -3,39 +3,30 @@ import {completeAssign} from '../utils';
 import {initialState, defaultResult} from '../game';
 import questions from '../data/questions';
 import globalStats from '../data/stats';
-import welcome from '../data/welcome';
 
-import GetWelcomeView from './welcome-view';
-import GetArtistView from './artist-question-view';
-import GetGenreView from './genre-question-view';
-import GetResultView from './result-view';
-
-export default class GameModel {
-  constructor() {
-    this._state = completeAssign({}, initialState);
+class GameModel {
+  constructor(state = initialState, questionsArr = questions) {
+    this._questionsArr = completeAssign({}, questionsArr);
+    this._state = completeAssign({}, state);
     this._result = completeAssign({}, defaultResult);
 
     this.timer = null;
   }
 
+  get state() {
+    return this._state;
+  }
+
+  get questions() {
+    return this._questionsArr;
+  }
+
+  get results() {
+    return this._result;
+  }
+
   toggleTimer(time) {
     this.timer = window.initializeCountdown(time);
-  }
-
-  renderScreen(screen) {
-    let appContainer = document.querySelector('.main');
-
-    appContainer.parentNode.appendChild(screen);
-    appContainer.parentNode.removeChild(appContainer);
-  }
-
-  startGame() {
-    let screen = new GetWelcomeView(welcome);
-
-    this.renderScreen(screen.elem);
-
-    screen.model = this;
-    screen.onAnswer = this.onAnswer;
   }
 
   setLives(obj, isAnswerCorrect) {
@@ -49,6 +40,7 @@ export default class GameModel {
     }
 
     return obj;
+
   }
 
   checkIfAnswerIsCorrect(answer) {
@@ -88,84 +80,6 @@ export default class GameModel {
 
   }
 
-  nextQuestion(screen, answers) {
-
-    screen.model = this;
-    screen.onAnswer = this.onAnswer;
-
-    let currentQuestion;
-    let currentQuestionType;
-    let isAnswerCorrect = false;
-    let arrOfAnswers = [];
-    let view = '';
-
-    let that = this;
-
-    if (this._state.question === 0) {
-      this.toggleTimer(this._state.time);
-    }
-
-    if (this._state.question > 0) {
-
-      if (answers.length) {
-        answers.forEach(function (answer) {
-          arrOfAnswers.push(that.checkIfAnswerIsCorrect(answer));
-        });
-
-        let areAnswersIncorrect = arrOfAnswers.find(function (answer) {
-          return !answer;
-        });
-
-        isAnswerCorrect = areAnswersIncorrect !== false;
-
-      } else {
-        isAnswerCorrect = this.checkIfAnswerIsCorrect(answers);
-      }
-
-      if (isAnswerCorrect) {
-        this.updateScore();
-      }
-
-      this.setLives(this._state, isAnswerCorrect);
-    }
-
-    if (this._state.question >= questions.length || this._state.lives < 1) {
-
-      const staticStats = globalStats.slice(0);
-
-      this._state.time = this.timer();
-
-      this.toggleTimer(0);
-      this.calculateStats(this._state, staticStats);
-
-      view = new GetResultView(this._result);
-    } else {
-      currentQuestion = questions[this._state.question];
-      currentQuestionType = currentQuestion.type.toLowerCase();
-
-      if (currentQuestionType === 'artist') {
-        view = new GetArtistView(currentQuestion);
-      } else if (currentQuestionType === 'genre') {
-        view = new GetGenreView(currentQuestion);
-      }
-    }
-
-    this.nextLevel();
-
-    this.renderScreen(view.elem);
-
-    view.model = this;
-    view.onAnswer = this.onAnswer;
-  }
-
-  onAnswer(game, answers) {
-    if (answers === null) {
-      game.restart();
-    } else {
-      game.nextQuestion(this, answers);
-    }
-  }
-
   updateScore() {
     this._state.score = this._state.score + 1;
   }
@@ -177,7 +91,16 @@ export default class GameModel {
   restart() {
     this._state = completeAssign({}, initialState);
     this._result = completeAssign({}, defaultResult);
+  }
 
-    this.startGame();
+  die() {
+    const staticStats = globalStats.slice(0);
+
+    this._state.time = this.timer();
+
+    this.toggleTimer(0);
+    this.calculateStats(this._state, staticStats);
   }
 }
+
+export default new GameModel();
