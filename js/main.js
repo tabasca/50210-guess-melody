@@ -1,8 +1,9 @@
-import {startGame} from './game';
-import getWelcomeTemplate from './templates/welcome-template';
-import {welcome} from './data/welcome';
+import GameModel from './game/game-model';
 
 (function () {
-  startGame(getWelcomeTemplate(welcome));
+
+  const Game = new GameModel();
+  Game.startGame();
+
 })();
 
