@@ -87,7 +87,7 @@ export default class GenreQuestionView extends AbstractView {
 
       that.actionBtn.setAttribute('disabled', 'disabled');
 
-      that._onAnswer(that.model, answersToCheck);
+      that._onAnswer(answersToCheck);
     });
   }
 }
