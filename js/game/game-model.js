@@ -1,13 +1,14 @@
 import {completeAssign} from '../utils';
 
 import {initialState, defaultResult} from '../game';
-import questions from '../data/questions';
 import globalStats from '../data/stats';
 
+import timer from '../timer';
+
 class GameModel {
-  constructor(state = initialState, questionsArr = questions) {
+  constructor(questionsArr) {
     this._questionsArr = completeAssign({}, questionsArr);
-    this._state = completeAssign({}, state);
+    this._state = completeAssign({}, initialState);
     this._result = completeAssign({}, defaultResult);
 
     this.timer = null;
@@ -26,7 +27,10 @@ class GameModel {
   }
 
   toggleTimer(time) {
-    this.timer = window.initializeCountdown(time);
+    let callback = function () {
+
+    };
+    this.timer = timer(time, callback);
   }
 
   setLives(obj, isAnswerCorrect) {
@@ -43,13 +47,13 @@ class GameModel {
 
   }
 
-  checkIfAnswerIsCorrect(answer) {
+  checkIfAnswerIsCorrect(answer, questionType) {
 
-    if (typeof answer.isCorrect !== 'boolean' && answer.isCorrect !== null) {
-      throw new RangeError('Value must be boolean or null');
-    }
+    let isCorrect = false;
 
-    return answer.isCorrect;
+    isCorrect = answer.genre === questionType ? answer.isCorrect : false;
+
+    return isCorrect;
 
   }
 
@@ -96,11 +100,13 @@ class GameModel {
   die() {
     const staticStats = globalStats.slice(0);
 
-    this._state.time = this.timer();
+    // todo: this._state.time = this.timer();
 
+    this.timer();
     this.toggleTimer(0);
+
     this.calculateStats(this._state, staticStats);
   }
 }
 
-export default new GameModel();
+export default GameModel;

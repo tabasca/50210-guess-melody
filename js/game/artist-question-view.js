@@ -1,5 +1,7 @@
 import AbstractView from './view';
 
+import player from '../player';
+
 export default class ArtistQuestionView extends AbstractView {
   constructor(data) {
     super();
@@ -20,7 +22,7 @@ export default class ArtistQuestionView extends AbstractView {
 
       answer += '<div class="main-answer-wrapper">' +
         '<input class="main-answer-r" type="radio" id="answer-' + counter + '" name="answer" value="' + counter + '" />' +
-        '<label class="main-answer" for="answer-' + counter + '"><img class="main-answer-preview" src="' + it.image + '">' + it.text + '</label>' +
+        '<label class="main-answer" for="answer-' + counter + '"><img class="main-answer-preview" src="' + it.image.url + '">' + it.title + '</label>' +
         '</div>';
     }
 
@@ -31,7 +33,7 @@ export default class ArtistQuestionView extends AbstractView {
     return `<section class="main main--level main--level-artist">
         <div class="main-wrap">
           <div class="main-timer"></div>
-          <h2 class="title main-title">${this.question.title}</h2>
+          <h2 class="title main-title">${this.question.question}</h2>
           <div class="player-wrapper"></div>
           <form class="main-list">
             ${this.getAnswers(this.question.answers)}
@@ -43,6 +45,8 @@ export default class ArtistQuestionView extends AbstractView {
   bindHandlers() {
     let that = this;
     this.actionBtn = this._elem.querySelector('.main-list');
+
+    player(this._elem, this.question.src, false, true);
 
     this.actionBtn.addEventListener('click', function (evt) {
       if (evt.target.classList.contains('main-answer-r')) {

@@ -2,6 +2,7 @@ import welcome from '../data/welcome';
 
 import WelcomeView from './welcome-view';
 import ResultView from './result-view';
+import ErrorView from './error-view';
 
 import gamePresenter from './game-presenter';
 
@@ -25,6 +26,11 @@ export default class Application {
 
   static showStats(result) {
     let screen = new ResultView(result);
+    renderScreen(screen.elem);
+  }
+
+  static showError() {
+    let screen = new ErrorView();
     renderScreen(screen.elem);
   }
 }

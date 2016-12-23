@@ -1,5 +1,7 @@
 import AbstractView from './view';
 
+import player from '../player';
+
 export default class GenreQuestionView extends AbstractView {
   constructor(data) {
     super();
@@ -21,18 +23,25 @@ export default class GenreQuestionView extends AbstractView {
     for (let it of list) {
       counter++;
 
-      answer += '<div class="genre-answer">' +
+      answer += '<div class="genre-answer" data-src="' + it.src + '">' +
         '<div class="player-wrapper"></div>' +
-        '<input type="checkbox" name="answer" value="' + it.value + '" id="a-' + counter + '"><label class="genre-answer-check" for="a-' + counter + '"></label>' +
+        '<input type="checkbox" name="answer" value="' + it.genre + '" id="a-' + counter + '"><label class="genre-answer-check" for="a-' + counter + '"></label>' +
         '</div>';
+
     }
 
     return answer;
   }
 
+  insertPlayer(list) {
+    for (let i = 0; i < list.length; i++) {
+      player(list[i], list[i].getAttribute('data-src'), false, true);
+    }
+  }
+
   getMarkup() {
     return `<section class="main main--level main--level-genre">
-        <h2 class="title">${this.question.title}</h2>
+        <h2 class="title">${this.question.question}</h2>
         <form class="genre">
           ${this.getAnswers(this.question.answers)}
           <button class="genre-answer-send" type="submit" disabled="disabled">Ответить</button>
@@ -45,7 +54,10 @@ export default class GenreQuestionView extends AbstractView {
 
     this.answersContainer = this._elem.querySelector('.genre');
     this.answers = this._elem.querySelectorAll('input[type="checkbox"]');
+    this.answerPlayerContainer = this._elem.querySelectorAll('.genre-answer');
     this.actionBtn = this._elem.querySelector('.genre-answer-send');
+
+    this.insertPlayer(this.answerPlayerContainer);
 
     this.answersContainer.addEventListener('change', function (evt) {
       that.checkedAnswers = [];
@@ -71,7 +83,7 @@ export default class GenreQuestionView extends AbstractView {
 
       for (let it of that.checkedAnswers) {
         for (let answer of arrOfAnswers) {
-          if (answer.value === it) {
+          if (answer.genre === it) {
             answersToCheck.push(answer);
           }
         }
