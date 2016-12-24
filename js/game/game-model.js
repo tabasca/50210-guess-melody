@@ -27,10 +27,10 @@ class GameModel {
   }
 
   toggleTimer(time) {
-    let callback = function () {
+    let cb = function () {
 
     };
-    this.timer = timer(time, callback);
+    this.timer = timer(time, cb);
   }
 
   setLives(obj, isAnswerCorrect) {
@@ -100,9 +100,7 @@ class GameModel {
   die() {
     const staticStats = globalStats.slice(0);
 
-    // todo: this._state.time = this.timer();
-
-    this.timer();
+    this._state.time = this.timer();
     this.toggleTimer(0);
 
     this.calculateStats(this._state, staticStats);
