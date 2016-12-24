@@ -46,7 +46,9 @@ export default class ArtistQuestionView extends AbstractView {
     let that = this;
     this.actionBtn = this._elem.querySelector('.main-list');
 
-    player(this._elem, this.question.src, false, true);
+    let elemToPastBtn = this._elem.querySelector('.player-wrapper');
+
+    player(elemToPastBtn, this.question.src, false, true);
 
     this.actionBtn.addEventListener('click', function (evt) {
       if (evt.target.classList.contains('main-answer-r')) {

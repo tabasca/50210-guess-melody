@@ -35,7 +35,8 @@ export default class GenreQuestionView extends AbstractView {
 
   insertPlayer(list) {
     for (let i = 0; i < list.length; i++) {
-      player(list[i], list[i].getAttribute('data-src'), false, true);
+      let elemToPastBtn = list[i].querySelector('.player-wrapper');
+      player(elemToPastBtn, list[i].getAttribute('data-src'), false, true);
     }
   }
 
