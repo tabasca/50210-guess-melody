@@ -1,13 +1,18 @@
-import GameModel from './game-model';
+import Model from './game-model';
 import GenreQuestionView from './genre-question-view';
 import ArtistQuestionView from './artist-question-view';
 import Application from './game-view';
 
+let GameModel;
+
+let currentQuestion;
+let currentQuestionType;
 
 class GamePresenter {
 
   restart() {
 
+    GameModel = new Model(Application.data);
     GameModel.restart();
 
     this.startGame();
@@ -22,8 +27,8 @@ class GamePresenter {
 
   changeView() {
 
-    let currentQuestion = GameModel.questions[GameModel.state.question];
-    let currentQuestionType = currentQuestion.type.toLowerCase();
+    currentQuestion = GameModel.questions[GameModel.state.question];
+    currentQuestionType = currentQuestion.type.toLowerCase();
 
     if (currentQuestionType === 'artist') {
       this.content = new ArtistQuestionView(currentQuestion);
@@ -32,7 +37,7 @@ class GamePresenter {
     }
 
     if (GameModel.state.question === 0) {
-      GameModel.toggleTimer(GameModel.state.time);
+      GameModel.toggleTimer(120);
     }
 
     this.content.onAnswer = this.onAnswer.bind(this);
@@ -55,7 +60,7 @@ class GamePresenter {
 
     if (answers.length) {
       answers.forEach(function (answer) {
-        arrOfAnswers.push(GameModel.checkIfAnswerIsCorrect(answer));
+        arrOfAnswers.push(GameModel.checkIfAnswerIsCorrect(answer, currentQuestionType));
       });
 
       let areAnswersIncorrect = arrOfAnswers.find(function (answer) {
