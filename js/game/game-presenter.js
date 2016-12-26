@@ -87,7 +87,9 @@ class GamePresenter {
 
       GameModel.die();
 
-      Application.showStats(GameModel.results);
+      window.addEventListener('resultsSuccessfullyCalculated', function () {
+        Application.showStats(GameModel.results);
+      });
 
     } else {
 

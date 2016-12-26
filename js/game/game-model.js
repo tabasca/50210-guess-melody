@@ -1,8 +1,5 @@
 import {completeAssign} from '../utils';
-
 import {initialState, defaultResult} from '../game';
-import globalStats from '../data/stats';
-
 import timer from '../timer';
 
 class GameModel {
@@ -49,11 +46,7 @@ class GameModel {
 
   checkIfAnswerIsCorrect(answer, questionType) {
 
-    let isCorrect = false;
-
-    isCorrect = answer.genre === questionType ? answer.isCorrect : false;
-
-    return isCorrect;
+    return answer.genre === questionType ? answer.isCorrect : false;
 
   }
 
@@ -97,13 +90,40 @@ class GameModel {
     this._result = completeAssign({}, defaultResult);
   }
 
-  die() {
-    const staticStats = globalStats.slice(0);
+  uploadResults(url, result) {
+    window.fetch(url, {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(result)
+    });
+  }
 
+  getResults(url) {
+    return window.fetch(url, {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).
+        then((response) => response.json());
+  }
+
+  die() {
+    let uploadUrl = 'https://intensive-ecmascript-server-dxttmcdylw.now.sh/guess-melody/stats/50210';
     this._state.time = this.timer();
     this.toggleTimer(0);
 
-    this.calculateStats(this._state, staticStats);
+    this.uploadResults(uploadUrl, this._state);
+
+    this.getResults(uploadUrl).
+        then((stats) => {
+          this.calculateStats(this._state, stats);
+          let eventToShowStats = new CustomEvent('resultsSuccessfullyCalculated');
+          window.dispatchEvent(eventToShowStats);
+        });
+
   }
 }
 
